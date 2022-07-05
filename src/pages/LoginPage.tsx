@@ -1,6 +1,8 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
+import FormInput from '../components/form/FormInput';
+
 const LoginPage = (): JSX.Element => {
   const formik = useFormik({
     initialValues: {
@@ -23,6 +25,8 @@ const LoginPage = (): JSX.Element => {
     },
   });
 
+  console.log(formik.errors.username);
+
   return (
     <>
       <h1>Login</h1>
@@ -30,20 +34,16 @@ const LoginPage = (): JSX.Element => {
         onSubmit={formik.handleSubmit}
       >
         <label>Username</label><br />
-        <input
-          name="username"
+        <FormInput
           type="text"
-          value={formik.values.username}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          {...formik.getFieldProps('username')}
+          errorMessage={formik.errors.username && formik.touched.username ? formik.errors.username : ''}
         /><br />
         <label>Password</label><br />
-        <input
-          name="password"
+        <FormInput
           type="password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          {...formik.getFieldProps('password')}
+          errorMessage={formik.errors.password && formik.touched.password ? formik.errors.password : ''}
         /><br />
         <input type="submit" value="Login" />
       </form>
